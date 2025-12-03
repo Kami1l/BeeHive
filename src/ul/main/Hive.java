@@ -23,29 +23,46 @@ public class Hive {
     public void enterHive(int beeID,int entranceID) throws InterruptedException
     {
         capacity.acquire();
-        entrances[entranceID].acquire(Direction.IN);
-        Thread.sleep(500);
-        entrances[entranceID].release();
 
-        synchronized(this)
+        Entrance entrance = entrances[entranceID];
+        entrance.acquire(Direction.IN);
+        
+        try
         {
-            currentBees++;
-            System.out.println("Bee " + beeID + " entered the hive. Current bees: " + currentBees);
+            Thread.sleep(500);
+            synchronized(this)
+            {
+                currentBees++;
+                System.out.println("Bee " + beeID + " entered the hive. Current bees: " + currentBees);
+            }
+        }finally{
+            entrance.release();
         }
+
+
+
         
     }
 
     public void leaveHive(int beeID,int entranceID) throws InterruptedException
     {
-        entrances[entranceID].acquire(Direction.OUT);
-        Thread.sleep(500);
-        entrances[entranceID].release();
-        synchronized(this)
+        Entrance entrance = entrances[entranceID];
+        entrance.acquire(Direction.OUT);
+        
+        try
         {
-            currentBees--;
-            System.out.println("Bee " + beeID + " left the hive. Current bees: " + currentBees);
+            Thread.sleep(500);
+            synchronized(this)
+            {
+                currentBees--;
+                System.out.println("Bee " + beeID + " left the hive. Current bees: " + currentBees);
+            }
+        }finally{
+            entrance.release();
+            capacity.release();
         }
-        capacity.release();
+
+
     }
     
 }

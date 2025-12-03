@@ -2,9 +2,9 @@ package src.ul.main;
 
 public class WorkerBee extends Bee {
     
-    public WorkerBee(int beeID,Hive hive,long maxTimeInHive)
+    public WorkerBee(int beeID,Hive hive,long maxTimeInHive, int lifeSpan)
     {
-        super(beeID,hive,maxTimeInHive);
+        super(beeID,hive,maxTimeInHive, lifeSpan);
     }
 
     @Override
@@ -12,19 +12,31 @@ public class WorkerBee extends Bee {
     {
         try
         {
-            while (true) 
+            while (visits < lifeSpan) 
             {
                 long timeOutSide = 300 + rand.nextInt(700);
                 Thread.sleep(timeOutSide);
 
                 int gateID = rand.nextInt(2);
 
+                
                 hive.enterHive(beeID, gateID);
 
-                Thread.sleep(maxTimeInHive);
+                visits++;
 
-                hive.leaveHive(gateID, gateID);
+                try
+                {
+                    Thread.sleep(maxTimeInHive);
+                }finally{
+                    hive.leaveHive(beeID, gateID);
+                }
+
+                
+
+                
             }
+            System.out.println("Bee " + beeID + " died after " + visits + " visits.");
+            return;
 
         }
         catch(InterruptedException e)

@@ -17,7 +17,8 @@ public class SimulationMain {
 
         for(int i=0;i<bees;i++)
         {
-            WorkerBee bee = new WorkerBee(i, hive, maxTimeInHive);
+            WorkerBee bee = new WorkerBee(i, hive, maxTimeInHive, 3);
+            
             bee.start();
         }
        

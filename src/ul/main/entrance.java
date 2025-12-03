@@ -27,6 +27,8 @@ public class Entrance {
             {
                 canPass.await();
             }
+            direction = dir;
+            beesInEntrance++;
 
         } finally
             {
