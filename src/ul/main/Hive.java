@@ -2,21 +2,29 @@ package src.ul.main;
 
 import java.util.concurrent.Semaphore;
 import src.ul.main.Entrance.Direction;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Hive {
 
     int maxBees;
-    int currentBees=0;
-    int eggAmount;
+    int currentBees = 0;
+    int eggAmount = 0;
 
     private final Entrance[] entrances;
     private final Semaphore capacity;
+
+    private final AtomicInteger nextBeeID = new AtomicInteger(0);
     
 
     public Hive(int K)
     {
         this.capacity = new Semaphore(K,true);
         this.entrances = new Entrance[] {new Entrance(),new Entrance()};
+    }
+
+    public int getNextBeeID()
+    {
+        return nextBeeID.getAndIncrement();
     }
     
 

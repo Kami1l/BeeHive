@@ -16,7 +16,6 @@ public abstract class Bee extends Thread {
         this.maxTimeInHive = maxTimeInHive;
         this.lifeSpan = lifeSpan;
         
-        
     }
 
     
