@@ -26,7 +26,29 @@ public class Hive {
     {
         return nextBeeID.getAndIncrement();
     }
-    
+
+    public void eggEnterHive() throws InterruptedException{
+        capacity.acquire();
+        synchronized(this){
+            
+            eggAmount++;
+            System.out.println("Egg Laid. Eggs: " + eggAmount);
+        }
+    }
+
+    public int eggLeaveHive() throws InterruptedException{
+        synchronized(this){
+
+            int newBeeId = getNextBeeID();
+            System.out.println("Egg hatched into Bee: " + newBeeId);
+            eggAmount--;
+            
+            currentBees++;
+
+            return newBeeId;
+        }
+
+    }
 
     public void enterHive(int beeID,int entranceID) throws InterruptedException
     {

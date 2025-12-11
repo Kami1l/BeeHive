@@ -11,7 +11,7 @@ public class SimulationMain {
 
         int bees = 5;
         int maxBeesInHive = 2;
-        int eggLayingInterval = 5000;
+        int eggLayingInterval = 3000;
 
         long maxTimeInHive = 2000;
 
@@ -23,7 +23,7 @@ public class SimulationMain {
         for(int i=0;i<bees;i++)
         {
             int id = hive.getNextBeeID();
-            WorkerBee bee = new WorkerBee(id, hive, maxTimeInHive, 3);
+            WorkerBee bee = new WorkerBee(id, hive, maxTimeInHive, 3,false);
             
             bee.start();
         }

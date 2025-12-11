@@ -1,10 +1,14 @@
 package src.ul.main;
 
 public class WorkerBee extends Bee {
+
+    private final boolean startsInside;
     
-    public WorkerBee(int beeID,Hive hive,long maxTimeInHive, int lifeSpan)
+    public WorkerBee(int beeID,Hive hive,long maxTimeInHive, int lifeSpan,boolean startsInside)
     {
         super(beeID,hive,maxTimeInHive, lifeSpan);
+        this.startsInside = startsInside;
+
     }
 
     @Override
@@ -12,6 +16,9 @@ public class WorkerBee extends Bee {
     {
         try
         {
+            if(startsInside){
+                firstStayAndLeave();
+            }
             while (visits < lifeSpan) 
             {
                 long timeOutSide = 300 + rand.nextInt(700);
@@ -43,5 +50,12 @@ public class WorkerBee extends Bee {
         {
             Thread.currentThread().interrupt();
         }
+    }
+
+    private void firstStayAndLeave() throws InterruptedException{
+        Thread.sleep(maxTimeInHive);
+        int gateID = rand.nextInt(2);
+        hive.leaveHive(beeID, gateID);
+        visits++;
     }
 }

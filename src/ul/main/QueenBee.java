@@ -21,13 +21,11 @@ public class QueenBee extends Thread {
             while (true) 
             {
                 Thread.sleep(eggLayingInterval);
-                synchronized(hive)
-                {
-                    Egg egg = new Egg(hive.eggAmount, hive, 1000 + rand.nextInt(2000));
-                    egg.start();
-                    hive.eggAmount++;
-                    System.out.println("Queen laid an egg. Total eggs: " + hive.eggAmount);
-                }
+
+                Egg egg = new Egg(hive.eggAmount, hive, 1000 + rand.nextInt(2000));
+
+                egg.start();
+                
             }
         }
         catch(InterruptedException e)

@@ -18,13 +18,14 @@ public class Egg extends Thread {
     {
         try
         {
+            hive.eggEnterHive();
             Thread.sleep(timeToBorn);
 
-            int newBeeID = hive.getNextBeeID();
-            WorkerBee bee = new WorkerBee(newBeeID, hive, 2000, 3);
+            int newBeeID = hive.eggLeaveHive();
+
+            WorkerBee bee = new WorkerBee(newBeeID, hive, 2000, 3,true);
             bee.start();
 
-            System.out.println("Egg " + id + " hatched into Bee " + newBeeID);
         }
         catch(InterruptedException e)
         {
